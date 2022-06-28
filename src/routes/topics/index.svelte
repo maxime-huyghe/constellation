@@ -6,7 +6,7 @@
 
 <main class="container mx-auto p-4">
   {#each topics as topic}
-    <a href={`/topics/${topic.id}`} class="card shadow-md rounded-none">
+    <a href={`/topics/${topic.id}/posts`} class="card shadow-md rounded-none">
       <div class="card-body flex-row justify-between">
         <div>
           <h2 class="card-title">

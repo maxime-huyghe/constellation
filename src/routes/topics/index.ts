@@ -1,6 +1,6 @@
 import { parseFormData, ToInt } from "$lib/formData";
-import { Prisma, type Topic } from "@prisma/client";
-import { object, string, type Infer } from "superstruct";
+import { Prisma } from "@prisma/client";
+import { object, string } from "superstruct";
 import type { RequestHandler } from "./__types/index.d";
 
 const topicWithAuthorName = Prisma.validator<Prisma.TopicArgs>()({
@@ -35,7 +35,7 @@ export const post: RequestHandler = async ({ request, locals: { prisma } }) => {
   return {
     status: 303,
     headers: {
-      location: `${request.url}/${topic.id}`,
+      location: `${request.url}/${topic.id}/posts`,
     },
   };
 };
