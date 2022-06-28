@@ -109,3 +109,7 @@ node_modules
 /build
 /.svelte-kit
 /package
+
+# SQLite
+*.sqlite
+*.sqlite-journal

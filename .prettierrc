@@ -4,7 +4,7 @@
   "printWidth": 100,
   "arrowParens": "avoid",
   "bracketSameLine": false,
-  "semi": false,
+  "semi": true,
   "svelteBracketNewLine": true,
   "svelteIndentScriptAndStyle": true,
   "tabWidth": 2,
