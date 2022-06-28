@@ -1,8 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import type { Handle } from "@sveltejs/kit";
 
+const PRISMA_CLIENT = new PrismaClient();
+
 export const handle: Handle = async ({ event, resolve }) => {
-  event.locals.prisma = new PrismaClient();
+  event.locals.prisma = PRISMA_CLIENT;
   const response = resolve(event);
   event.locals.prisma.$disconnect();
   return response;
