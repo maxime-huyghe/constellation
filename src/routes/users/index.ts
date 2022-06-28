@@ -1,4 +1,6 @@
-import type { User } from "@prisma/client";
+import { optionull, parseFormData } from "$lib/formData";
+import type { Prisma, User } from "@prisma/client";
+import { object, string } from "superstruct";
 import type { RequestHandler } from "./__types/index.d";
 
 export const get: RequestHandler<{ users: User[] }> = async ({ locals: { prisma } }) => {
@@ -11,11 +13,16 @@ export const get: RequestHandler<{ users: User[] }> = async ({ locals: { prisma 
 
 export const post: RequestHandler = async ({ request, locals: { prisma } }) => {
   const fd = await request.formData();
+  const input: Prisma.UserCreateInput = parseFormData(
+    fd,
+    object({
+      name: optionull(string()),
+      email: string(),
+    }),
+  );
+
   const user = await prisma.user.create({
-    data: {
-      email: fd.get("email") as string,
-      name: fd.get("name") as string,
-    },
+    data: input,
   });
 
   return {
