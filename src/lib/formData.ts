@@ -15,7 +15,7 @@ export function optionull<U, V>(t: Struct<U, V>): Struct<U | null | undefined, V
 
 export const ToInt = coerce(number(), string(), value => parseInt(value));
 
-export function parseFormData<O, P extends Describe<O>>(fd: FormData, parser: P): O {
+export function parseFormData<T>(fd: FormData, parser: Describe<T>): T {
   const object = formDataToRecord(fd);
   assert(object, parser);
   return object;

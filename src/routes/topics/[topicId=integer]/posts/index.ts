@@ -1,4 +1,6 @@
+import { parseFormData } from "$lib/formData";
 import { Prisma } from "@prisma/client";
+import { object, string } from "superstruct";
 import type { RequestHandler } from "./__types";
 
 const query = {
@@ -22,6 +24,22 @@ export const get: RequestHandler<{
   return {
     body: {
       topic,
+    },
+  };
+};
+
+export const post: RequestHandler = async ({ locals, request, params }) => {
+  const fd = await request.formData();
+  const input = parseFormData(fd, object({ text: string() }));
+  const topicId = parseInt(params.topicId, 10);
+  const authorId = 1; // TODO: get from session when implemented
+  const post = await locals.prisma.post.create({
+    data: { ...input, authorId, topicId },
+  });
+  return {
+    status: 303,
+    headers: {
+      location: `${request.url}#${post.id}`,
     },
   };
 };

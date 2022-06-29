@@ -1,12 +1,11 @@
 <script lang="ts">
-  import type { User } from "@prisma/client";
-
   export let authorName: string;
   export let dateCreated: Date;
   export let text: string;
+  export let id: number;
 </script>
 
-<div class="card shadow-md">
+<div class="card shadow-md" id={id.toString()}>
   <div class="card-body flex-row">
     <div class="w-32">
       <span>{authorName}</span>
