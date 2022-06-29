@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>Constellation ★</title>
+</svelte:head>
+
 <main class="hero container mx-auto p-4">
   <article class="hero-content text-center flex-col lg:flex-row-reverse prose lg:prose-xl">
     <i class="fa-solid fa-star fa-10x text-yellow-400 rotate-12" />

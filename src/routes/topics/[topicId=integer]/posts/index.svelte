@@ -8,6 +8,10 @@
   export let topic: TopicWithAuthorNameAndPostsWithTheirAuthors;
 </script>
 
+<svelte:head>
+  <title>{topic.title} ★</title>
+</svelte:head>
+
 <main class="container mx-auto p-4">
   <div class="flex flex-row justify-between px-2 pb-4">
     <div>

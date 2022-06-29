@@ -4,6 +4,10 @@
   export let topics: TopicWithAuthorName[];
 </script>
 
+<svelte:head>
+  <title>Topic list ★</title>
+</svelte:head>
+
 <main class="container mx-auto p-4">
   {#each topics as topic}
     <a href={`/topics/${topic.id}/posts`} class="card shadow-md rounded-none">
