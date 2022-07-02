@@ -1,6 +1,7 @@
 <script lang="ts">
+  import { dev } from "$app/env";
+
   export let error: string = "";
-  export let attemptedUsername: string = "";
 </script>
 
 <main class="container mx-auto p-4">
@@ -10,14 +11,12 @@
         <h2>Log In</h2>
       </div>
       <label class="form-control">
+        <span class="label label-text">Email</span>
+        <input class="input input-bordered" name="email" type={dev ? "text" : "email"} required />
+      </label>
+      <label class="form-control">
         <span class="label label-text">Username</span>
-        <input
-          class="input input-bordered"
-          name="username"
-          type="text"
-          required
-          value={attemptedUsername}
-        />
+        <input class="input input-bordered" name="username" type="text" required />
       </label>
       <label class="form-control">
         <span class="label label-text">Password</span>
@@ -27,10 +26,7 @@
         <div class="text-error pl-1 mt-2">{error}</div>
       {/if}
       <div class="flex mt-6">
-        <button type="submit" class="btn btn-primary w-full">Log in</button>
-      </div>
-      <div class="flex mt-4">
-        <a href="/signup" class="btn btn-secondary w-full">No account? Sign up here!</a>
+        <button type="submit" class="btn btn-primary w-full">Sign up</button>
       </div>
     </div>
   </form>

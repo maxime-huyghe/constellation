@@ -1,4 +1,4 @@
-import { checkPassword, createSession } from "$lib/auth";
+import { createSession, createUser } from "$lib/auth";
 import { parseFormData } from "$lib/formData";
 import { object, string } from "superstruct";
 import { serialize } from "cookie";
@@ -18,29 +18,13 @@ export const get: RequestHandler = async ({ url, locals }) => {
   };
 };
 
-function incorrectUsernameOrPassword(attemptedUsername: string) {
-  return {
-    status: 401,
-    body: {
-      error: "Incorrect username or password",
-      attemptedUsername,
-    },
-  };
-}
-
 export const post: RequestHandler = async ({ request, locals, url }) => {
   const fd = await request.formData();
-  const input = parseFormData(fd, object({ username: string(), password: string() }));
-  const user = await locals.prisma.user.findUnique({ where: { name: input.username } });
-  if (!user) {
-    return incorrectUsernameOrPassword(input.username);
-  }
-  // Don't want to accidentally check an un-awaited promise.
-  const validPassword: boolean = await checkPassword(user, input.password);
-  if (!validPassword) {
-    return incorrectUsernameOrPassword(input.username);
-  }
-
+  const input = parseFormData(
+    fd,
+    object({ email: string(), username: string(), password: string() }),
+  );
+  const user = await createUser(locals.prisma, input);
   const { id } = await createSession(locals.prisma, user.id);
   const ref = url.searchParams.get("ref");
   return {

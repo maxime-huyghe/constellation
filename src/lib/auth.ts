@@ -1,4 +1,5 @@
-import { Prisma, type PrismaClient, type Session } from "@prisma/client";
+import { Prisma, type PrismaClient, type Session, type User } from "@prisma/client";
+import { randomBytes, pbkdf2 } from "crypto";
 
 export async function createSession(prisma: PrismaClient, userId: number): Promise<Session> {
   return prisma.session.create({ data: { userId } });
@@ -21,4 +22,33 @@ export async function getSessionWithUser(
 
 export async function deleteSession(prisma: PrismaClient, sessionId: string) {
   return prisma.session.delete({ where: { id: sessionId } });
+}
+
+async function hashPassword(password: string, salt: Buffer): Promise<Buffer> {
+  return new Promise((resolve, reject) => {
+    pbkdf2(Buffer.from(password, "utf8"), salt, 100_000, 64, "sha512", (err, key) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(key);
+    });
+  });
+}
+
+export async function createUser(
+  prisma: PrismaClient,
+  params: { email: string; username: string; password: string },
+): Promise<User> {
+  const salt = randomBytes(64);
+  const hash = await hashPassword(params.password, salt);
+  const newUser = prisma.user.create({
+    data: { email: params.email, name: params.username, salt, hash },
+  });
+
+  return newUser;
+}
+
+export async function checkPassword(user: User, password: string): Promise<boolean> {
+  const calculatedHash = await hashPassword(password, user.salt);
+  return calculatedHash.compare(user.hash) === 0;
 }
