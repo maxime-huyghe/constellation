@@ -22,7 +22,7 @@
         </a>
       </li>
       <li>
-        <a href="/logout" class="flex justify-between">
+        <a href={`/logout?ref=${$page.url}`} class="flex justify-between">
           <span>Log out</span>
           <i class="fa-solid fa-right-from-bracket" />
         </a>
