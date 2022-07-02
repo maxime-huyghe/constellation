@@ -27,5 +27,5 @@
   {#each topic.posts as post}
     <Post authorName={post.author.name} {...post} />
   {/each}
-  <PostCreator postUrl={$page.url.toString()} />
+  <PostCreator />
 </main>

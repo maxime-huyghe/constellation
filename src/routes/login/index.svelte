@@ -5,7 +5,7 @@
 </script>
 
 <main class="container mx-auto p-4">
-  <form class="card shadow-md rounded-none w-96 mx-auto" method="post" href={$page.url.toString()}>
+  <form class="card shadow-md rounded-none w-96 mx-auto" method="post">
     <div class="card-body">
       <div class="card-title">
         <h2>Log In</h2>
