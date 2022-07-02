@@ -9,9 +9,12 @@ declare global {
   namespace App {
     interface Locals {
       prisma: PrismaClient;
+      user: { id: number; name: string; email: string } | undefined;
     }
     // interface Platform {}
-    // interface Session {}
+    interface Session {
+      user: { id: number; name: string; email: string } | null;
+    }
     // interface Stuff {}
   }
 }

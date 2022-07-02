@@ -1,4 +1,5 @@
 <script>
+  import UserButton from "$lib/components/UserButton.svelte";
   import "../app.css";
 </script>
 
@@ -6,10 +7,7 @@
   <div>
     <a href="/" class="btn btn-ghost normal-case text-3xl font-black">Constellation</a>
   </div>
-  <a href="/login" class="btn btn-ghost gap-2">
-    Log in
-    <i class="fa-solid fa-right-to-bracket text-xl" />
-  </a>
+  <UserButton />
 </nav>
 
 <slot />
