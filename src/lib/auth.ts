@@ -42,13 +42,28 @@ export async function createUser(
   const salt = randomBytes(64);
   const hash = await hashPassword(params.password, salt);
   const newUser = prisma.user.create({
-    data: { email: params.email, name: params.username, salt, hash },
+    data: {
+      email: params.email,
+      name: params.username,
+      auth: {
+        create: {
+          hash,
+          salt,
+        },
+      },
+    },
   });
 
   return newUser;
 }
 
-export async function checkPassword(user: User, password: string): Promise<boolean> {
-  const calculatedHash = await hashPassword(password, user.salt);
-  return calculatedHash.compare(user.hash) === 0;
+export async function checkPassword(
+  prisma: PrismaClient,
+  user: User,
+  password: string,
+): Promise<boolean> {
+  const auth = await prisma.userAuth.findUnique({ where: { userId: user.id } });
+  // SAFETY: users are always created with a corresponding auth
+  const calculatedHash = await hashPassword(password, auth!.salt);
+  return calculatedHash.compare(auth!.hash) === 0;
 }

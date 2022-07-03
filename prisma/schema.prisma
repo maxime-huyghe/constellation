@@ -11,14 +11,20 @@ datasource db {
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  name    String   @unique
+  id      Int       @id @default(autoincrement())
+  name    String    @unique
   email   String
-  salt    Bytes
-  hash    Bytes
+  auth    UserAuth?
   topics  Topic[]
   posts   Post[]
   session Session?
+}
+
+model UserAuth {
+  salt   Bytes
+  hash   Bytes
+  user   User  @relation(fields: [userId], references: [id])
+  userId Int   @id
 }
 
 model Session {
