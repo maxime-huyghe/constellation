@@ -14,20 +14,22 @@
         </div>
       </div>
     </button>
-    <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-      <li>
-        <a href="/users/me" class="flex justify-between">
-          <span>My profile</span>
-          <i class="fa-solid fa-user" />
-        </a>
-      </li>
-      <li>
-        <a href={`/logout?ref=${$page.url}`} class="flex justify-between">
-          <span>Log out</span>
-          <i class="fa-solid fa-right-from-bracket" />
-        </a>
-      </li>
-    </ul>
+    <form action={`/logout?ref=${$page.url}`} method="post">
+      <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+        <li>
+          <a href="/users/me" class="flex justify-between">
+            <span>My profile</span>
+            <i class="fa-solid fa-user" />
+          </a>
+        </li>
+        <li>
+          <button class="flex justify-between" type="submit">
+            <span>Log out</span>
+            <i class="fa-solid fa-right-from-bracket" />
+          </button>
+        </li>
+      </ul>
+    </form>
   </div>
 {:else}
   <a href={`/login?ref=${$page.url}`} class="btn btn-ghost gap-2">

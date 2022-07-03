@@ -2,7 +2,7 @@ import { deleteSession } from "$lib/auth";
 import { parse, serialize } from "cookie";
 import type { RequestHandler } from "./__types";
 
-export const get: RequestHandler = async ({ locals, request, url }) => {
+export const post: RequestHandler = async ({ locals, request, url }) => {
   const cookieHeader = request.headers.get("cookie");
   const cookies = parse(cookieHeader ?? "");
   if (cookies.session_id) {
