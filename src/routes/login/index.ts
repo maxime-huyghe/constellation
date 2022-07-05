@@ -36,7 +36,7 @@ export const post: RequestHandler = async ({ request, locals, url }) => {
     return incorrectUsernameOrPassword(input.username);
   }
   // Don't want to accidentally check an un-awaited promise.
-  const validPassword: boolean = await checkPassword(user, input.password);
+  const validPassword: boolean = await checkPassword(locals.prisma, user, input.password);
   if (!validPassword) {
     return incorrectUsernameOrPassword(input.username);
   }
