@@ -18,18 +18,32 @@ export const get: RequestHandler<{ topics: TopicWithAuthorName[] }> = async ({
   };
 };
 
-export const post: RequestHandler = async ({ request, locals: { prisma } }) => {
+export const post: RequestHandler = async ({ request, locals }) => {
+  if (!locals.user) {
+    return {
+      status: 401,
+    };
+  }
   const fd = await request.formData();
-  const input = parseFormData(
+  const { title, text } = parseFormData(
     fd,
     object({
       title: string(),
-      author: ToInt,
+      text: string(),
     }),
   );
 
-  const topic = await prisma.topic.create({
-    data: input,
+  const topic = await locals.prisma.topic.create({
+    data: {
+      title,
+      authorId: locals.user.id,
+      posts: {
+        create: {
+          text,
+          authorId: locals.user.id,
+        },
+      },
+    },
   });
 
   return {

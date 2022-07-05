@@ -1,8 +1,6 @@
 <script lang="ts">
-  import { page } from "$app/stores";
-
   import Post from "$lib/components/Post.svelte";
-  import PostCreator from "$lib/components/PostCreator.svelte";
+  import PostForm from "$lib/components/PostForm.svelte";
   import type { TopicWithAuthorNameAndPostsWithTheirAuthors } from ".";
 
   export let topic: TopicWithAuthorNameAndPostsWithTheirAuthors;
@@ -27,5 +25,5 @@
   {#each topic.posts as post}
     <Post authorName={post.author.name} {...post} />
   {/each}
-  <PostCreator />
+  <PostForm />
 </main>

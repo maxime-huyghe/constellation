@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { session } from "$app/stores";
+  import TopicForm from "$lib/components/TopicForm.svelte";
   import type { TopicWithAuthorName } from ".";
 
   export let topics: TopicWithAuthorName[];
@@ -9,6 +11,9 @@
 </svelte:head>
 
 <main class="container mx-auto p-4">
+  {#if $session.user}
+    <TopicForm />
+  {/if}
   {#each topics as topic}
     <a href={`/topics/${topic.id}/posts`} class="card shadow-md rounded-none">
       <div class="card-body flex-row justify-between">
