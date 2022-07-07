@@ -1,0 +1,1 @@
+web: yarn migrate:deploy && node build/index.js
