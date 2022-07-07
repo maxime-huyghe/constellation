@@ -10,7 +10,6 @@ const config = {
   kit: {
     adapter: adapter({
       precompress: true,
-      envPrefix: "SVELTEKIT_",
     }),
   },
 };
